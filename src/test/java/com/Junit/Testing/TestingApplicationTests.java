@@ -39,7 +39,7 @@ class JunitTestingApplicationTests {
 
 	@Test
 	public void addProduct(){
-		Product product = new Product("Book", "200", "Stationary");
+		Product product = new Product("Book", 200.0F, "Stationary");
 		Product response = restTemplate.postForEntity(baseUrl+"/save", product, Product.class).getBody();
 		assertEquals("Book", response.getName());
 		assertEquals(1, testRepository.findAll().size());
@@ -77,7 +77,7 @@ class JunitTestingApplicationTests {
 	@Sql(statements = "insert into productsdata.products(id, name, price, department) values (3, 'Book3', '300', 'Stattionary')",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from productsdata.products where name='Book3'", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	public void getUpdateProductById(){
-		Product product = new Product("Book3", "200", "Stationary");
+		Product product = new Product("Book3", 200.0F, "Stationary");
 		Product response = restTemplate.getForObject(baseUrl+"/fetch/{id}", Product.class, 3);
 		restTemplate.put(baseUrl+"/update/{id}", product, 3);
 		Product response1 = restTemplate.getForObject(baseUrl+"/fetch/{id}", Product.class, 3);
